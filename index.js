@@ -131,9 +131,9 @@ class SortableGrid extends Component {
 
   componentDidMount = () => this.handleNewProps(this.props)
 
-  componentWillUnmount = () => { if (this.tapTimer) clearTimeout(this.tapTimer) }
+  UNSAFE_componentWillUnmount = () => { if (this.tapTimer) clearTimeout(this.tapTimer) }
 
-  componentWillReceiveProps = (properties) => this.handleNewProps(properties)
+  UNSAFE_componentWillReceiveProps = (properties) => this.handleNewProps(properties)
 
   handleNewProps = (properties) => {
     this._assignReceivedPropertiesIntoThis(properties)
