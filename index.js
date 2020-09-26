@@ -477,7 +477,7 @@ class SortableGrid extends Component {
         velocity: 2000,
         tension: 2000,
         friction: 5,
-        useNativeDriver: false: false,
+        useNativeDriver: false,
       }).start()
     }
   }
