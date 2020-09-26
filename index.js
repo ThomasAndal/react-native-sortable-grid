@@ -127,11 +127,11 @@ class SortableGrid extends Component {
     return { deleteModeOn }
   }
 
-  componentWillMount = () => this.createTouchHandlers()
+  UNSAFE_componentWillMount = () => this.createTouchHandlers()
 
   componentDidMount = () => this.handleNewProps(this.props)
 
-  UNSAFE_componentWillUnmount = () => { if (this.tapTimer) clearTimeout(this.tapTimer) }
+  componentWillUnmount = () => { if (this.tapTimer) clearTimeout(this.tapTimer) }
 
   UNSAFE_componentWillReceiveProps = (properties) => this.handleNewProps(properties)
 
@@ -195,7 +195,8 @@ class SortableGrid extends Component {
           this._getBlock(closest).currentPosition,
           {
             toValue: this._getActiveBlock().origin,
-            duration: this.blockTransitionDuration
+            duration: this.blockTransitionDuration,
+            useNativeDriver: true,
           }
         ).start()
         let blockPositions = this.state.blockPositions
@@ -236,7 +237,7 @@ class SortableGrid extends Component {
     return new Promise( (resolve, reject) => {
       Animated.timing(
         this.state.deleteBlockOpacity,
-        { toValue: 0, duration: 2 * this.activeBlockCenteringDuration }
+        { toValue: 0, duration: 2 * this.activeBlockCenteringDuration,useNativeDriver: true}
       ).start(resolve)
     })
   }
@@ -246,7 +247,8 @@ class SortableGrid extends Component {
       this._getBlock(blockIndex).currentPosition,
       {
         toValue: position,
-        duration: this.blockTransitionDuration
+        duration: this.blockTransitionDuration,
+        useNativeDriver: true,
       }
     ).start()
   }
@@ -258,7 +260,8 @@ class SortableGrid extends Component {
       activeBlockCurrentPosition,
       {
         toValue: this._getActiveBlock().origin,
-        duration: this.activeBlockCenteringDuration
+        duration: this.activeBlockCenteringDuration,
+        useNativeDriver: true,
       }
     ).start()
   }
@@ -453,7 +456,8 @@ class SortableGrid extends Component {
         this.state.gridHeight,
         {
           toValue: this.gridHeightTarget,
-          duration: this.blockTransitionDuration
+          duration: this.blockTransitionDuration,
+          useNativeDriver: true,
         }
       ).start()
     }
@@ -472,7 +476,8 @@ class SortableGrid extends Component {
         toValue: 0,
         velocity: 2000,
         tension: 2000,
-        friction: 5
+        friction: 5,
+        useNativeDriver: true,
       }).start()
     }
   }
