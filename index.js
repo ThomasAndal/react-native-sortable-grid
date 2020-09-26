@@ -22,7 +22,7 @@ class Block extends Component {
 
   render = () =>
     <Animated.View
-      useNativeDriver={true}
+      useNativeDriver={false}
       style = { this.props.style }
       onLayout = { this.props.onLayout }
       {...this.props.panHandlers}
@@ -49,7 +49,7 @@ class SortableGrid extends Component {
 
     render = () =>
       <Animated.View
-        useNativeDriver={true}
+        useNativeDriver={false}
         style={ this._getGridStyle() }
         onLayout={this.assessGridSize}
       >
@@ -196,7 +196,7 @@ class SortableGrid extends Component {
           {
             toValue: this._getActiveBlock().origin,
             duration: this.blockTransitionDuration,
-            useNativeDriver: true,
+            useNativeDriver: false,
           }
         ).start()
         let blockPositions = this.state.blockPositions
@@ -237,7 +237,7 @@ class SortableGrid extends Component {
     return new Promise( (resolve, reject) => {
       Animated.timing(
         this.state.deleteBlockOpacity,
-        { toValue: 0, duration: 2 * this.activeBlockCenteringDuration,useNativeDriver: true}
+        { toValue: 0, duration: 2 * this.activeBlockCenteringDuration,useNativeDriver: false}
       ).start(resolve)
     })
   }
@@ -248,7 +248,7 @@ class SortableGrid extends Component {
       {
         toValue: position,
         duration: this.blockTransitionDuration,
-        useNativeDriver: true,
+        useNativeDriver: false,
       }
     ).start()
   }
@@ -261,7 +261,7 @@ class SortableGrid extends Component {
       {
         toValue: this._getActiveBlock().origin,
         duration: this.activeBlockCenteringDuration,
-        useNativeDriver: true,
+        useNativeDriver: false,
       }
     ).start()
   }
@@ -457,7 +457,7 @@ class SortableGrid extends Component {
         {
           toValue: this.gridHeightTarget,
           duration: this.blockTransitionDuration,
-          useNativeDriver: true,
+          useNativeDriver: false,
         }
       ).start()
     }
@@ -477,7 +477,7 @@ class SortableGrid extends Component {
         velocity: 2000,
         tension: 2000,
         friction: 5,
-        useNativeDriver: true,
+        useNativeDriver: false: false,
       }).start()
     }
   }
