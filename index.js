@@ -22,6 +22,7 @@ class Block extends Component {
 
   render = () =>
     <Animated.View
+      useNativeDriver={true}
       style = { this.props.style }
       onLayout = { this.props.onLayout }
       {...this.props.panHandlers}
@@ -280,7 +281,6 @@ class SortableGrid extends Component {
   }
 
   assessGridSize = ({nativeEvent}) => {
-    console.log("Calculating grid size");
     if (this.props.itemWidth && this.props.itemWidth < nativeEvent.layout.width) {
       this.itemsPerRow = Math.floor(nativeEvent.layout.width / this.props.itemWidth)
       this.blockWidth = nativeEvent.layout.width / this.itemsPerRow
