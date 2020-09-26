@@ -49,6 +49,7 @@ class SortableGrid extends Component {
 
     render = () =>
       <Animated.View
+        useNativeDriver={true}
         style={ this._getGridStyle() }
         onLayout={this.assessGridSize}
       >
