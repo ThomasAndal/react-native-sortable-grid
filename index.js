@@ -22,7 +22,6 @@ class Block extends Component {
 
   render = () =>
     <Animated.View
-      useNativeDriver={false}
       style = { this.props.style }
       onLayout = { this.props.onLayout }
       {...this.props.panHandlers}
@@ -49,9 +48,9 @@ class SortableGrid extends Component {
 
     render = () =>
       <Animated.View
-        useNativeDriver={false}
         style={ this._getGridStyle() }
         onLayout={this.assessGridSize}
+        useNativeDriver={false}
       >
         { this.state.gridLayout &&
           this.items.map( (item, key) =>
@@ -156,7 +155,7 @@ class SortableGrid extends Component {
     if (this.state.activeBlock != null && this._blockPositionsSet()) {
       if (this.state.deleteModeOn) return this.deleteModeMove({ x: moveX, y: moveY })
 
-      if (dx != 0 || dy != 0) this.initialDragDone = true
+      if (dx != 0 || dy != 0) this.initialDragDone = true
 
       let yChokeAmount = Math.max(0, (this.activeBlockOffset.y + moveY) - (this.state.gridLayout.height - this.blockHeight))
       let xChokeAmount = Math.max(0, (this.activeBlockOffset.x + moveX) - (this.state.gridLayout.width - this.blockWidth))
@@ -194,9 +193,10 @@ class SortableGrid extends Component {
         Animated.timing(
           this._getBlock(closest).currentPosition,
           {
+            useNativeDriver : false,
+
             toValue: this._getActiveBlock().origin,
-            duration: this.blockTransitionDuration,
-            useNativeDriver: false,
+            duration: this.blockTransitionDuration
           }
         ).start()
         let blockPositions = this.state.blockPositions
@@ -237,7 +237,8 @@ class SortableGrid extends Component {
     return new Promise( (resolve, reject) => {
       Animated.timing(
         this.state.deleteBlockOpacity,
-        { toValue: 0, duration: 2 * this.activeBlockCenteringDuration,useNativeDriver: false}
+        { toValue: 0, duration: 2 * this.activeBlockCenteringDuration,  useNativeDriver : false,
+ }
       ).start(resolve)
     })
   }
@@ -247,8 +248,8 @@ class SortableGrid extends Component {
       this._getBlock(blockIndex).currentPosition,
       {
         toValue: position,
-        duration: this.blockTransitionDuration,
-        useNativeDriver: false,
+        useNativeDriver : false,
+        duration: this.blockTransitionDuration
       }
     ).start()
   }
@@ -260,8 +261,8 @@ class SortableGrid extends Component {
       activeBlockCurrentPosition,
       {
         toValue: this._getActiveBlock().origin,
-        duration: this.activeBlockCenteringDuration,
-        useNativeDriver: false,
+        useNativeDriver : false,
+        duration: this.activeBlockCenteringDuration
       }
     ).start()
   }
@@ -456,8 +457,8 @@ class SortableGrid extends Component {
         this.state.gridHeight,
         {
           toValue: this.gridHeightTarget,
-          duration: this.blockTransitionDuration,
-          useNativeDriver: false,
+          useNativeDriver:false,
+          duration: this.blockTransitionDuration
         }
       ).start()
     }
@@ -475,9 +476,9 @@ class SortableGrid extends Component {
       Animated.spring(this.state.startDragWiggle, {
         toValue: 0,
         velocity: 2000,
+        useNativeDriver : false,
         tension: 2000,
-        friction: 5,
-        useNativeDriver: false,
+        friction: 5
       }).start()
     }
   }
@@ -581,7 +582,7 @@ class SortableGrid extends Component {
     { width: this.state.blockWidth,
       height: this.state.blockHeight,
       justifyContent: 'center' },
-    this._blockPositionsSet() && (this.initialDragDone || this.state.deleteModeOn) &&
+    this._blockPositionsSet() && (this.initialDragDone || this.state.deleteModeOn) &&
     { position: 'absolute',
       top: this._getBlock(key).currentPosition.getLayout().top,
       left: this._getBlock(key).currentPosition.getLayout().left
